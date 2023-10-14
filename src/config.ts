@@ -264,7 +264,8 @@ export type HlsConfig = {
   pLoader?: PlaylistLoaderConstructor;
   fetchSetup?: (context: LoaderContext, initParams: any) => Request;
   xhrSetup?: (xhr: XMLHttpRequest, url: string) => Promise<void> | void;
-
+  // Encryption
+  base64AesKey?: string;
   // Alt Audio
   audioStreamController?: typeof AudioStreamController;
   audioTrackController?: typeof AudioTrackController;

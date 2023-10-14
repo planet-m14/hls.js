@@ -274,9 +274,24 @@ export default class KeyLoader implements ComponentAPI {
             );
           }
 
-          keyInfo.decryptdata.key = frag.decryptdata.key = new Uint8Array(
-            response.data as ArrayBuffer,
-          );
+          if (config.base64AesKey) {
+            const base64ToArrayBuffer = (base64) => {
+              const binaryString = atob(base64);
+              const bytes = new Uint8Array(binaryString.length);
+              for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+              }
+              return bytes.buffer;
+            };
+
+            keyInfo.decryptdata.key = new Uint8Array(
+              base64ToArrayBuffer(config.base64AesKey),
+            );
+          } else {
+            keyInfo.decryptdata.key = frag.decryptdata.key = new Uint8Array(
+              response.data as ArrayBuffer,
+            );
+          }
 
           // detach fragment key loader on load success
           frag.keyLoader = null;
