@@ -16,8 +16,17 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm run build:ci
-      - run: npm test
+      - name: install
+        run: |
+          npx -y npm-ci-please@^1.1.1
+        env:
+          CI: true
+      - run: CI=false && npm run build
+        env:
+          CI: false
+      - run: CI=false && npm test
+        env:
+          CI: false
 
   publish-gpr:
     needs: build
@@ -36,7 +45,7 @@ jobs:
           npx -y npm-ci-please@^1.1.1
         env:
           CI: true
-      - run: npm run build:ci
-      - run: npm publish
+      - run: CI=false && npm run build
+      - run: CI=false && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
