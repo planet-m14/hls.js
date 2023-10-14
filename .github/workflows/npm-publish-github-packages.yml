@@ -31,6 +31,11 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+      - name: install
+        run: |
+          npx -y npm-ci-please@^1.1.1
+        env:
+          CI: true
       - run: npm run build:ci
       - run: npm publish
         env:
