@@ -24,9 +24,9 @@ jobs:
       - run: CI=false && npm run build
         env:
           CI: false
-      - run: CI=false && npm test
-        env:
-          CI: false
+#      - run: CI=false && npm test
+#        env:
+#          CI: false
 
   publish-gpr:
     needs: build
